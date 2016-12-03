@@ -39,7 +39,7 @@ public class FCServerController {
 	@RequestMapping(value = "/animate/{seconds}", method = { POST, GET })
 	public @ResponseBody String animate(@PathVariable(required = false) final Optional<Integer> seconds) {
 		executeAnimation(seconds, new Knightrider());
-
+		server.close();
 		return "Started animation for " + seconds + " seconds";
 	}
 
