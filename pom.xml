@@ -9,7 +9,7 @@
 	<packaging>jar</packaging>
 
 	<name>pixels</name>
-	<description>Demo project for Spring Boot</description>
+	<description>SpringBoot application for fadecandy</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -48,6 +48,11 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring4</artifactId>
+			</dependency>
 
 	</dependencies>
 

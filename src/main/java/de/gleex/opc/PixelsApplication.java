@@ -27,36 +27,13 @@ public class PixelsApplication {
 
 	public static void main(final String[] args) {
 		SpringApplication.run(PixelsApplication.class, args);
-		//
-		// final OpcClient server = new OpcClient("noteblubb", 7890);
-		// server.setInterpolation(true);
-		// final OpcDevice fadeCandy = server.addDevice();
-		// final PixelStrip strip1 = fadeCandy.addPixelStrip(0, 9);
-		// log.info("Fadecandy config:\n{}", server.getConfig());
-		//
-		// strip1.setAnimation(new Knightrider());
-		//
-		// log.info("starting animation");
-		// for (int i = 0; i < 300; i++) {
-		// server.animate();
-		// try {
-		// Thread.sleep(100);
-		// }
-		// catch (final InterruptedException e) {
-		// // TODO Auto-generated catch block
-		// e.printStackTrace();
-		// }
-		// }
-		// log.info("animation ended");
-		//
-		// server.close();
 	}
 
 	@PostConstruct
 	public void dumpConfig() {
 		log.info("fadecandy.address: {}", config.fadecandy.address);
 		log.info("fadecandy.port: {}", config.fadecandy.port);
-		log.info("server config:\n{}", server.getConfig());
+		log.info("fadecandyserver config:\n{}", server.getConfig());
 	}
 
 	@PreDestroy

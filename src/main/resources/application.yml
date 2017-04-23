@@ -1,6 +1,9 @@
 fadecandy:
-  address: noteblubb
+  address: localhost
   port: 7890
   pin: 0
   pixelCount: 9
   interpolate: true
+spring:
+  datasource:
+    url: jdbc:h2:file:./db/pixels.db

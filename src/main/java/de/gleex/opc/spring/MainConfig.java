@@ -37,7 +37,7 @@ public class MainConfig {
 	@Bean
 	@DependsOn("opcDevice")
 	public PixelStrip strip() {
-		log.info("creating pixelString with pin {} and pixelCount {}", fadecandy.pin, fadecandy.pixelCount);
+		log.info("creating pixelStrip with pin {} and pixelCount {}", fadecandy.pin, fadecandy.pixelCount);
 		return opcDevice().addPixelStrip(fadecandy.pin, fadecandy.pixelCount);
 	}
 }
