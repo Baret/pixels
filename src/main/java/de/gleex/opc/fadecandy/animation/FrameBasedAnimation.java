@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import org.assertj.core.util.VisibleForTesting;
+
 import de.gleex.opc.fadecandy.pixel.Frame;
 import de.gleex.opc.fadecandy.pixel.Pixel;
 import de.gleex.opc.official.Animation;
@@ -43,7 +45,8 @@ public class FrameBasedAnimation extends Animation {
 		putCurrentFrameOnStrip(strip);
 	}
 
-	private boolean putCurrentFrameOnStrip(PixelStrip strip) {
+	@VisibleForTesting
+	boolean putCurrentFrameOnStrip(PixelStrip strip) {
 		Frame frame = frames.get(currentFrame);
 		if(frame.getPixelCount() != strip.getPixelCount()) {
 			return false;
