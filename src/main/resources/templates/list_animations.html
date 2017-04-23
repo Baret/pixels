@@ -6,7 +6,7 @@
 			<thead><tr><td>Name</td></tr></thead>
 			<tbody>
 				<tr th:each="animation: ${animations}">
-					<td th:value="${animation.name}">Animation name</td>
+					<td th:text="${animation.name}">Animation name</td>
 				</tr>
 			</tbody>
 		</table>
