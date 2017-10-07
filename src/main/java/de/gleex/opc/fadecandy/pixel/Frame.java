@@ -2,13 +2,24 @@ package de.gleex.opc.fadecandy.pixel;
 
 import java.util.Arrays;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import lombok.AllArgsConstructor;
+
 /**
  * A frame is an arrangement of a fixed number of pixels.
  *
  * @author Baret
  *
  */
+@AllArgsConstructor
+@Entity
 public class Frame {
+	@Id
+	@GeneratedValue
+	private Long id;
 	private Pixel[] pixels;
 
 	public Frame(final int pixelCount) {

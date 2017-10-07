@@ -50,7 +50,7 @@ public class FCServerController {
 	public void executeAnimation(final Optional<Integer> seconds, final Animation a) {
 		strip.setAnimation(a);
 
-		final long millis = seconds.flatMap(s -> Optional.of(s * 1000)).filter(s -> s > 0).orElse(1000);
+		final long millis = seconds.map(s -> s * 1000).filter(s -> s > 0).orElse(1000);
 
 		final int delay = 500;
 		final long steps = millis / delay;

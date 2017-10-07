@@ -1,6 +1,19 @@
 package de.gleex.opc.fadecandy.pixel;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter
 public class Pixel {
+	@Id
+	@GeneratedValue
+	@Setter
+	private Long id;
 	private short red;
 	private short green;
 	private short blue;
@@ -27,13 +40,6 @@ public class Pixel {
 	}
 
 	/**
-	 * @return the red
-	 */
-	public short getRed() {
-		return red;
-	}
-
-	/**
 	 * Accepts only values in the range of 0 to 255 (including). Smaller values will be set to 0, bigger ones to 255.
 	 *
 	 * @param red
@@ -44,13 +50,6 @@ public class Pixel {
 	}
 
 	/**
-	 * @return the green
-	 */
-	public short getGreen() {
-		return green;
-	}
-
-	/**
 	 * Accepts only values in the range of 0 to 255 (including). Smaller values will be set to 0, bigger ones to 255.
 	 *
 	 * @param green
@@ -58,13 +57,6 @@ public class Pixel {
 	 */
 	public void setGreen(final short green) {
 		this.green = (short) Math.max(0, Math.min(255, green));
-	}
-
-	/**
-	 * @return the blue
-	 */
-	public short getBlue() {
-		return blue;
 	}
 
 	/**
