@@ -1,14 +1,24 @@
-<html>
-	<head><title>Animations</title></head>
-	<body>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+<head>
+<title>Animations</title>
+</head>
+<body>
+	<div class="container" layout:fragment="content">
 		<h1>Animations</h1>
 		<table>
-			<thead><tr><td>Name</td></tr></thead>
+			<thead>
+				<tr>
+					<td>Name</td>
+				</tr>
+			</thead>
 			<tbody>
 				<tr th:each="animation: ${animations}">
 					<td th:text="${animation.name}">Animation name</td>
 				</tr>
 			</tbody>
-		</table>  
-	</body>
+		</table>
+	</div>
+</body>
 </html>

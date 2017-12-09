@@ -39,6 +39,10 @@ public class Pixel {
 		setBlue(b);
 	}
 
+	public Pixel(final int r, final int g, final int b) {
+		this((short) r, (short) g, (short) b);
+	}
+
 	/**
 	 * Accepts only values in the range of 0 to 255 (including). Smaller values will be set to 0, bigger ones to 255.
 	 *
@@ -71,7 +75,7 @@ public class Pixel {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
