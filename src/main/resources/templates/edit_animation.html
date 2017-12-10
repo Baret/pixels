@@ -2,7 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
 <head>
-<title>Animations</title>
+	<title>Animations</title>
+	<link rel="stylesheet" th:href="@{/webjars/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css}" />
+	<script type="text/javascript" th:src="@{/webjars/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js}" />
+<script>
+	
+$('document').ready(function(){
+	$('.input-group').colorpicker({
+	      useAlpha: false
+    });
+});
+	
+</script>
 </head>
 <body>
 	<div class="container" layout:fragment="content">
@@ -10,7 +21,12 @@
 		<table class="table">
 			<tbody>
 				<tr th:each="frame: ${animation.frames}">
-					<td th:each="pixel: ${frame.pixels}" th:text="${pixel}">Color picker</td>
+					<td th:each="pixel: ${frame.pixels}">
+						<div th:id="'cp_panel_' + ${frame.id} + '_' + ${pixel.id}" class="input-group input-group-sm colorpicker-component">
+							<input th:id="${frame.id} + '_' + ${pixel.id}" type="text" class="form-control" th:value="${pixel.toHexString()}" />
+							<span class="input-group-addon"><i></i></span>
+						</div>
+					</td>
 				</tr>
 			</tbody>
 		</table>

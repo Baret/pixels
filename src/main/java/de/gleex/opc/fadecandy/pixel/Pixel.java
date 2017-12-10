@@ -73,6 +73,17 @@ public class Pixel {
 		this.blue = (short) Math.max(0, Math.min(255, blue));
 	}
 
+	/**
+	 * @return the 3 colors of this pixel as 'hex string' for example <code>#f8eb48</code>
+	 */
+	public String toHexString() {
+		return "#" + asHex(red) + asHex(green) + asHex(blue);
+	}
+
+	private String asHex(short value) {
+		return String.format("%02x", value);
+	}
+
 	/*
 	 * (non-Javadoc)
 	 *
