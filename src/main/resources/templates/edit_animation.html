@@ -6,18 +6,11 @@
 </head>
 <body>
 	<div class="container" layout:fragment="content">
-		<h1>Animations</h1>
+		<h1 th:text="'Edit ' + ${animation.name}">Edit animation</h1>
 		<table class="table">
-			<thead>
-				<tr>
-					<td>Name</td>
-					<td>Edit animation</td>
-				</tr>
-			</thead>
 			<tbody>
-				<tr th:each="animation: ${animations}">
-					<td th:text="${animation.name}">Animation name</td>
-					<td><a th:href="@{'/animation/edit/' + ${animation.id}}">edit</a></td>
+				<tr th:each="frame: ${animation.frames}">
+					<td th:each="pixel: ${frame.pixels}" th:text="${pixel}">Color picker</td>
 				</tr>
 			</tbody>
 		</table>

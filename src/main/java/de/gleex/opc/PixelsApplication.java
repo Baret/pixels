@@ -21,7 +21,7 @@ public class PixelsApplication {
 	private MainConfig config;
 
 	@Autowired
-	private OpcClient server;
+	private OpcClient client;
 
 	private static Logger log = LoggerFactory.getLogger(PixelsApplication.class);
 
@@ -33,12 +33,12 @@ public class PixelsApplication {
 	public void dumpConfig() {
 		log.info("fadecandy.address: {}", config.fadecandy.address);
 		log.info("fadecandy.port: {}", config.fadecandy.port);
-		log.info("fadecandyserver config:\n{}", server.getConfig());
+		log.info("fadecandyserver config:\n{}", client.getConfig());
 	}
 
 	@PreDestroy
 	public void disconnectFadecandy() {
-		log.info("Disconnecting from {}", server.getConfig());
-		server.close();
+		log.info("Disconnecting from {}", client.getConfig());
+		client.close();
 	}
 }

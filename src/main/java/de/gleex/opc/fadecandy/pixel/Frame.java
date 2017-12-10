@@ -1,12 +1,20 @@
 package de.gleex.opc.fadecandy.pixel;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import org.apache.commons.collections4.list.FixedSizeList;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * A frame is an arrangement of a fixed number of pixels.
@@ -15,26 +23,31 @@ import lombok.AllArgsConstructor;
  *
  */
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Frame {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private Pixel[] pixels;
+	@Getter
+	@OneToMany(cascade=CascadeType.ALL)
+	@Setter
+	private List<Pixel> pixels;
 
 	public Frame(final int pixelCount) {
-		pixels = new Pixel[pixelCount];
-		for (int i = 0; i < pixels.length; i++) {
-			setPixel(i, new Pixel());
+		List<Pixel> tmpList = new ArrayList<>(pixelCount);
+		for (int i = 0; i < pixelCount; i++) {
+			tmpList.add(new Pixel());
 		}
+		pixels = FixedSizeList.fixedSizeList(tmpList);
 	}
 
 	public void setPixel(final int index, final Pixel newPixel) {
-		pixels[index] = newPixel;
+		pixels.set(index, newPixel);
 	}
 
 	public Pixel getPixel(final int index) {
-		return pixels[index];
+		return pixels.get(index);
 	}
 
 	/*
@@ -44,10 +57,10 @@ public class Frame {
 	 */
 	@Override
 	public String toString() {
-		return "Frame [pixels=" + Arrays.toString(pixels) + "]";
+		return "Frame [pixels=" + pixels.toString() + "]";
 	}
 
 	public int getPixelCount() {
-		return pixels.length;
+		return pixels.size();
 	}
 }

@@ -3,6 +3,7 @@ package de.gleex.opc.fadecandy.animation;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -24,16 +25,16 @@ import lombok.Setter;
 @Getter
 @Entity
 public class FrameBasedAnimation extends Animation {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
 	private String name;
-	@OneToMany
+	@OneToMany(cascade={CascadeType.ALL})
 	private List<Frame> frames;
 	@Transient
 	private int currentFrame = 0;
-	
+
 	public FrameBasedAnimation(String name) {
 		this.name = name;
 		frames = new ArrayList<>();
@@ -63,9 +64,13 @@ public class FrameBasedAnimation extends Animation {
 		boolean redraw = putCurrentFrameOnStrip(strip);
 		currentFrame++;
 		if(currentFrame >= frames.size()) {
-			currentFrame = 0; 
+			currentFrame = 0;
 		}
 		return redraw;
+	}
+
+	public void addFrame(Frame frame) {
+		frames.add(frame);
 	}
 
 }
