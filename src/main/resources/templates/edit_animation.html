@@ -8,9 +8,17 @@
 <script>
 	
 $('document').ready(function(){
-	$('.input-group').colorpicker({
-	      useAlpha: false
+	$('.colorpicker-component').colorpicker({
+	      useAlpha: false,
+	      fallbackColor: this.getElementsByTagName('input')[0].value,
+	      component: '.badge'
+    }).on('changeColor', function(e) {
+		e.target.getElementsByClassName('badge')[0].innerHTML = e.color.toHex();
     });
+	
+	$("#togglebutton").click(function() { 
+	    $(".form-control").toggle();
+	});
 });
 	
 </script>
@@ -18,13 +26,14 @@ $('document').ready(function(){
 <body>
 	<div class="container" layout:fragment="content">
 		<h1 th:text="'Edit ' + ${animation.name}">Edit animation</h1>
+		<div class="button-group"><button id="togglebutton" class="btn btn-sm" onclick="toggleInputs()">Toggle inputs</button></div>
 		<table class="table">
 			<tbody>
 				<tr th:each="frame: ${animation.frames}">
 					<td th:each="pixel: ${frame.pixels}">
-						<div th:id="'cp_panel_' + ${frame.id} + '_' + ${pixel.id}" class="input-group input-group-sm colorpicker-component">
-							<input th:id="${frame.id} + '_' + ${pixel.id}" type="text" class="form-control" th:value="${pixel.toHexString()}" />
-							<span class="input-group-addon"><i></i></span>
+						<div th:id="'cp_panel_' + ${frame.id} + '_' + ${pixel.id}" class="container colorpicker-component">
+							<span th:id="'label_' + ${frame.id} + '_' + ${pixel.id}" class="badge" th:text="${pixel.toHexString()}" style="display: inline-block">100</span>
+							<input th:id="${frame.id} + '_' + ${pixel.id}" type="text" class="form-control" th:value="${pixel.toHexString()}" style="display: none" />
 						</div>
 					</td>
 				</tr>
