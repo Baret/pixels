@@ -2,7 +2,6 @@ package de.gleex.opc.fadecandy.pixel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -37,9 +36,8 @@ public class Frame {
 
 	public Frame(final int pixelCount) {
 		List<Pixel> tmpList = new ArrayList<>(pixelCount);
-		Random rand = new Random(System.currentTimeMillis());
 		for (int i = 0; i < pixelCount; i++) {
-			tmpList.add(new Pixel(rand.nextInt(256), rand.nextInt(256), rand.nextInt(256)));
+			tmpList.add(new Pixel());
 		}
 		pixels = FixedSizeList.fixedSizeList(tmpList);
 	}

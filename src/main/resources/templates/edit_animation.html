@@ -8,6 +8,7 @@
 <script>
 	
 $('document').ready(function(){
+	// initialize colorpickers
 	$('.colorpicker-component').colorpicker({
 	      useAlpha: false,
 	      fallbackColor: this.getElementsByTagName('input')[0].value,
@@ -16,9 +17,35 @@ $('document').ready(function(){
 		e.target.getElementsByClassName('badge')[0].innerHTML = e.color.toHex();
     });
 	
+	// toggle visibility of input fields
 	$("#togglebutton").click(function() { 
 	    $(".form-control").toggle();
 	});
+	
+	// ajax call
+	/*
+	$('#updateForm').submit(function(event) {
+		   
+		var producer = $('#producer').val();
+		var model = $('#model').val();
+		var price = $('#price').val();
+		var json = { "producer" : producer, "model" : model, "price": price};
+		   
+		$.ajax({
+		    url: $("#updateForm").attr( "action"),
+		    data: JSON.stringify(json),
+		    type: "POST",
+		     
+		    beforeSend: function(xhr) {
+		        xhr.setRequestHeader("Accept", "application/json");
+		        xhr.setRequestHeader("Content-Type", "application/json");
+		    },
+		    success: function(smartphone) {
+		        var respContent = "<span>Success!</span>";
+		         
+		        $("#sPhoneFromResponse").html(respContent);         
+		    }
+		});*/
 });
 	
 </script>
@@ -27,18 +54,20 @@ $('document').ready(function(){
 	<div class="container" layout:fragment="content">
 		<h1 th:text="'Edit ' + ${animation.name}">Edit animation</h1>
 		<div class="button-group"><button id="togglebutton" class="btn btn-sm" onclick="toggleInputs()">Toggle inputs</button></div>
+		<form th:action="${'/animation/update/' + animation.id}">
 		<table class="table">
 			<tbody>
 				<tr th:each="frame: ${animation.frames}">
 					<td th:each="pixel: ${frame.pixels}">
 						<div th:id="'cp_panel_' + ${frame.id} + '_' + ${pixel.id}" class="container colorpicker-component">
 							<span th:id="'label_' + ${frame.id} + '_' + ${pixel.id}" class="badge" th:text="${pixel.toHexString()}" style="display: inline-block">100</span>
-							<input th:id="${frame.id} + '_' + ${pixel.id}" type="text" class="form-control" th:value="${pixel.toHexString()}" style="display: none" />
+							<input th:id="${frame.id} + '_' + ${pixel.id}" type="text" class="form-control pixel" th:value="${pixel.toHexString()}" style="display: none" />
 						</div>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+		</form>
 	</div>
 </body>
 </html>

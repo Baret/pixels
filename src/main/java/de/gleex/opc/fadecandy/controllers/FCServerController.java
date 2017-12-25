@@ -1,7 +1,6 @@
 package de.gleex.opc.fadecandy.controllers;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 import java.util.Optional;
 
@@ -13,7 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import de.gleex.opc.fadecandy.animation.Knightrider;
+import de.gleex.opc.fadecandy.animation.FrameBasedAnimation;
+import de.gleex.opc.fadecandy.persistance.AnimationRepository;
 import de.gleex.opc.official.Animation;
 import de.gleex.opc.official.OpcClient;
 import de.gleex.opc.official.PixelStrip;
@@ -24,43 +24,49 @@ public class FCServerController {
 	Logger log = LoggerFactory.getLogger(FCServerController.class);
 
 	@Autowired
-	private OpcClient server;
+	private OpcClient client;
 
 	@Autowired
 	private PixelStrip strip;
+	
+	@Autowired
+	private AnimationRepository animationRepo;
 
 	@RequestMapping(value = "/config", method = { POST, GET })
 	public @ResponseBody String displayConfig() {
 		log.info("Returning server config.");
 		log.info("Pixels on strip: {}", strip.getPixelCount());
-		return server.getConfig();
+		return client.getConfig();
 	}
 
-	@RequestMapping(value = "/animate/{seconds}", method = { POST, GET })
-	public @ResponseBody String animate(@PathVariable(required = false) final Optional<Integer> seconds) {
-		executeAnimation(seconds, new Knightrider());
-		server.close();
+	@RequestMapping(value = "/animate/{id}/{delay}/{seconds}", method = { POST, GET })
+	public @ResponseBody String animate(@PathVariable Long id, @PathVariable("delay") Integer delayInMs, @PathVariable(required = false) final Optional<Integer> seconds) {
+		final FrameBasedAnimation animation = animationRepo.findOne(id);
+		if(animation != null) {
+			executeAnimation(seconds, delayInMs, animation);
+			client.close();
+		}
 		return "Started animation for " + seconds + " seconds";
 	}
 
 	/**
 	 * @param seconds
+	 * @param delayInMs 
 	 * @param a
 	 */
-	public void executeAnimation(final Optional<Integer> seconds, final Animation a) {
+	public void executeAnimation(final Optional<Integer> seconds, Integer delayInMs, final Animation a) {
 		strip.setAnimation(a);
 
 		final long millis = seconds.map(s -> s * 1000).filter(s -> s > 0).orElse(1000);
 
-		final int delay = 500;
-		final long steps = millis / delay;
-		log.info("starting animation for {} steps and a delay of {}", steps, delay);
-		server.show();
+		final long steps = millis / delayInMs;
+		log.info("starting animation for {} steps and a delay of {}", steps, delayInMs);
+		client.show();
 		try {
-			Thread.sleep(delay);
+			Thread.sleep(delayInMs);
 			for (int i = 1; i < steps; i++) {
-				server.animate();
-				Thread.sleep(delay);
+				client.animate();
+				Thread.sleep(delayInMs);
 			}
 		}
 		catch (final InterruptedException e) {
