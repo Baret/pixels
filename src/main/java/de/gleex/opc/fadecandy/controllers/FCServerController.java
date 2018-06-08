@@ -1,9 +1,10 @@
 package de.gleex.opc.fadecandy.controllers;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-
-import java.util.Optional;
-
+import de.gleex.opc.fadecandy.animation.FrameBasedAnimation;
+import de.gleex.opc.fadecandy.persistence.AnimationRepository;
+import de.gleex.opc.official.Animation;
+import de.gleex.opc.official.OpcClient;
+import de.gleex.opc.official.PixelStrip;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +13,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import de.gleex.opc.fadecandy.animation.FrameBasedAnimation;
-import de.gleex.opc.fadecandy.persistance.AnimationRepository;
-import de.gleex.opc.official.Animation;
-import de.gleex.opc.official.OpcClient;
-import de.gleex.opc.official.PixelStrip;
+import java.util.Optional;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 public class FCServerController {

@@ -1,17 +1,5 @@
 package de.gleex.opc.fadecandy.animation;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-
-import org.assertj.core.util.VisibleForTesting;
-
 import de.gleex.opc.fadecandy.pixel.Frame;
 import de.gleex.opc.fadecandy.pixel.Pixel;
 import de.gleex.opc.official.Animation;
@@ -19,6 +7,11 @@ import de.gleex.opc.official.PixelStrip;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.assertj.core.util.VisibleForTesting;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor
 @Setter

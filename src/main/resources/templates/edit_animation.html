@@ -1,60 +1,22 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org" layout:decorator="layout">
+	  xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorator="layout">
 <head>
 	<title>Animations</title>
 	<link rel="stylesheet" th:href="@{/webjars/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.css}" />
 	<script type="text/javascript" th:src="@{/webjars/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js}" />
-<script>
-	
-$('document').ready(function(){
-	// initialize colorpickers
-	$('.colorpicker-component').colorpicker({
-	      useAlpha: false,
-	      fallbackColor: this.getElementsByTagName('input')[0].value,
-	      component: '.badge'
-    }).on('changeColor', function(e) {
-		e.target.getElementsByClassName('badge')[0].innerHTML = e.color.toHex();
-    });
-	
-	// toggle visibility of input fields
-	$("#togglebutton").click(function() { 
-	    $(".form-control").toggle();
-	});
-	
-	// ajax call
-	/*
-	$('#updateForm').submit(function(event) {
-		   
-		var producer = $('#producer').val();
-		var model = $('#model').val();
-		var price = $('#price').val();
-		var json = { "producer" : producer, "model" : model, "price": price};
-		   
-		$.ajax({
-		    url: $("#updateForm").attr( "action"),
-		    data: JSON.stringify(json),
-		    type: "POST",
-		     
-		    beforeSend: function(xhr) {
-		        xhr.setRequestHeader("Accept", "application/json");
-		        xhr.setRequestHeader("Content-Type", "application/json");
-		    },
-		    success: function(smartphone) {
-		        var respContent = "<span>Success!</span>";
-		         
-		        $("#sPhoneFromResponse").html(respContent);         
-		    }
-		});*/
-});
-	
-</script>
+	<script type="text/javascript" th:src="@{/js/edit_animation.js}" />
 </head>
 <body>
 	<div class="container" layout:fragment="content">
 		<h1 th:text="'Edit ' + ${animation.name}">Edit animation</h1>
-		<div class="button-group"><button id="togglebutton" class="btn btn-sm" onclick="toggleInputs()">Toggle inputs</button></div>
+		<div class="button-group">
+			<button id="togglebutton" class="btn btn-sm">Toggle inputs</button>
+		</div>
 		<form th:action="${'/animation/update/' + animation.id}">
+		<div class="button-group">
+			<button id="savebutton" class="btn btn-sm">Save animation</button>
+		</div>
 		<table class="table">
 			<tbody>
 				<tr th:each="frame: ${animation.frames}">
